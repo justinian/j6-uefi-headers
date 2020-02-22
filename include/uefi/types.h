@@ -64,7 +64,7 @@ enum class evt : uint32_t
 	notify_signal                 = 0x00000200,
 
 	signal_exit_boot_services     = 0x00000201,
-	signal_virtual_address_change = 0x60000201,
+	signal_virtual_address_change = 0x60000202,
 
 	runtime                       = 0x40000000,
 	timer                         = 0x80000000
@@ -78,7 +78,7 @@ enum class tpl : uint64_t
 	high_level  = 31
 };
 
-using event_notify = status (*)(event, void*);
+using event_notify = void (*)(event, void*);
 
 } // namespace uefi
 
