@@ -11,6 +11,9 @@
 #include <uefi/tables.h>
 
 namespace uefi {
+namespace bs_impl {
+	using locate_protocol = uefi::status (*)(const uefi::guid *, void *, void **);
+}
 
 struct boot_services {
 	static constexpr uint64_t signature = 0x56524553544f4f42ull;
@@ -71,7 +74,7 @@ struct boot_services {
 	// Library Services
 	void *protocols_per_handle;
 	void *locate_handle_buffer;
-	void *locate_protocol;
+	bs_impl::locate_protocol locate_protocol;
 	void *install_multiple_protocol_interfaces;
 	void *uninstall_multiple_protocol_interfaces;
 
