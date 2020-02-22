@@ -28,6 +28,34 @@ enum class status : uint64_t
 };
 
 inline bool is_error(status s) { return static_cast<uint64_t>(s) & error_bit; }
+inline bool is_warning(status s) { return !is_error(s) && s != status::success; }
+
+enum class memory_type : uint32_t
+{
+	reserved_memory_type,
+	loader_code,
+	loader_data,
+	boot_services_code,
+	boot_services_data,
+	runtime_services_code,
+	runtime_services_data,
+	conventional_memory,
+	unusable_memory,
+	acpi_reclaim_memory,
+	acpi_memory_nvs,
+	memory_mapped_io,
+	memory_mapped_io_port_space,
+	pal_code,
+	persistent_memory,
+	max_memory_type
+};
+
+enum class allocate_type : uint32_t
+{
+	any_pages,
+	max_address,
+	address
+};
 
 } // namespace uefi
 

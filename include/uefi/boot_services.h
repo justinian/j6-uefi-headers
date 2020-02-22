@@ -9,10 +9,12 @@
 
 #include <stdint.h>
 #include <uefi/tables.h>
+#include <uefi/types.h>
 
 namespace uefi {
 namespace bs_impl {
-	using locate_protocol = uefi::status (*)(const uefi::guid *, void *, void **);
+	using allocate_pages = status (*)(allocate_type, memory_type, uint64_t, uintptr_t*);
+	using locate_protocol = status (*)(const guid *, void *, void **);
 }
 
 struct boot_services {
@@ -25,7 +27,7 @@ struct boot_services {
 	void *restore_tpl;
 
 	// Memory Services
-	void *allocate_pages;
+	bs_impl::allocate_pages allocate_pages;
 	void *free_pages;
 	void *get_memory_map;
 	void *allocate_pool;
