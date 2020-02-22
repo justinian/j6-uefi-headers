@@ -12,6 +12,7 @@
 namespace uefi {
 
 using handle = void *;
+using event = void *;
 
 constexpr uint64_t error_bit = 0x8000000000000000ull; 
 constexpr uint64_t make_error(uint64_t e) { return e|error_bit; }
@@ -56,6 +57,28 @@ enum class allocate_type : uint32_t
 	max_address,
 	address
 };
+
+enum class evt : uint32_t
+{
+	notify_wait                   = 0x00000100,
+	notify_signal                 = 0x00000200,
+
+	signal_exit_boot_services     = 0x00000201,
+	signal_virtual_address_change = 0x60000201,
+
+	runtime                       = 0x40000000,
+	timer                         = 0x80000000
+};
+
+enum class tpl : uint64_t
+{
+	application = 4,
+	callback    = 8,
+	notify      = 16,
+	high_level  = 31
+};
+
+using event_notify = status (*)(event, void*);
 
 } // namespace uefi
 
