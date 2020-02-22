@@ -64,6 +64,10 @@ constexpr uint64_t system_table_signature = 0x5453595320494249ull;
 constexpr uint32_t system_table_revision = make_system_table_revision(2, 70);
 constexpr uint32_t specification_revision = system_table_revision;
 
+namespace vendor_guids {
+	constexpr guid acpi1{ 0xeb9d2d30,0x2d88,0x11d3,{0x9a,0x16,0x00,0x90,0x27,0x3f,0xc1,0x4d} };
+	constexpr guid acpi2{ 0x8868e871,0xe4f1,0x11d3,{0xbc,0x22,0x00,0x80,0xc7,0x3c,0x88,0x81} };
+} // namespace vendor_guids
 } // namespace uefi
 
 #endif
