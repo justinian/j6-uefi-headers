@@ -14,6 +14,7 @@
 namespace uefi {
 namespace bs_impl {
 	using allocate_pages = status (*)(allocate_type, memory_type, uint64_t, uintptr_t*);
+	using allocate_pool = status (*)(memory_type, uint64_t, void**);
 	using create_event = status (*)(evt, tpl, event_notify, void*, event*);
 	using locate_protocol = status (*)(const guid *, void *, void **);
 }
@@ -31,7 +32,7 @@ struct boot_services {
 	bs_impl::allocate_pages allocate_pages;
 	void *free_pages;
 	void *get_memory_map;
-	void *allocate_pool;
+	bs_impl::allocate_pool allocate_pool;
 	void *free_pool;
 
 	// Event & Timer Services
