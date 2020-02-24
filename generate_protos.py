@@ -16,6 +16,7 @@ template = Template('''#pragma once
 // https://github.com/justinian/j6-uefi-headers for more information.
 
 #include <uefi/guid.h>
+#include <uefi/types.h>
 {%- for header in headers %}
 #include <{{ header }}>
 {%- endfor %}
