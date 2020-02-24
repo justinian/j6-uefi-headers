@@ -25,18 +25,9 @@ namespace uefi {
 namespace protos {
 struct {{ name }};
 
-namespace {{ name }}_impl {
-{%- for method in methods %}
-    using {{ method.name }} = uefi::status (*)(
-    {%- if not method.get("skip_this", false) -%}uefi::protos::{{ name }} *{%- endif -%}
-    {%- if not method.get("skip_this", false) and method.args %}, {% endif -%}
-    {{ method.args|join(', ', attribute='type') }});
-{%- endfor %}
-} // namespace {{ name }}_impl
-
 struct {{ name }}
 {
-    static constexpr uefi::guid guid{ {{ guid }} };
+    {% if guid %}static constexpr uefi::guid guid{ {{ guid }} };{% endif %}
 {% for method in methods %}
     inline uefi::status {{ method.name }}(
       {%- for arg in method.args -%}
@@ -55,9 +46,12 @@ struct {{ name }}
 
 protected:
 {%- for method in methods %}
-    {{ name }}_impl::{{ method.name }} _{{ method.name }};
-{%- endfor %}
-
+    using _{{ method.name }}_def = uefi::status (*)(
+    {%- if not method.get("skip_this", false) -%}uefi::protos::{{ name }} *{%- endif -%}
+    {%- if not method.get("skip_this", false) and method.args %}, {% endif -%}
+    {{ method.args|join(', ', attribute='type') }});
+    _{{ method.name }}_def _{{ method.name }};
+{% endfor %}
 public:
 {%- for datum in post_data %}
     {{ datum.type }} {{ datum.name }};
