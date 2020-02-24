@@ -15,8 +15,10 @@ namespace uefi {
 namespace bs_impl {
 	using allocate_pages = status (*)(allocate_type, memory_type, uint64_t, uintptr_t*);
 	using allocate_pool = status (*)(memory_type, uint64_t, void**);
+	using handle_protocol = status (*)(handle, guid *, void **);
 	using create_event = status (*)(evt, tpl, event_notify, void*, event*);
 	using locate_protocol = status (*)(const guid *, void *, void **);
+	using set_mem = void (*)(void *, uint64_t, uint8_t);
 }
 
 struct boot_services {
@@ -47,7 +49,7 @@ struct boot_services {
 	void *install_protocol_interface;
 	void *reinstall_protocol_interface;
 	void *uninstall_protocol_interface;
-	void *handle_protocol;
+	bs_impl::handle_protocol handle_protocol;
 	void *_reserved;
 	void *register_protocol_notify;
 	void *locate_handle;
@@ -87,7 +89,7 @@ struct boot_services {
 
 	// Miscellaneous Services
 	void *copy_mem;
-	void *set_mem;
+	bs_impl::set_mem set_mem;
 	void *create_event_ex;
 };
 
