@@ -12,8 +12,11 @@
 namespace uefi {
 
 using handle = void *;
-using event = void *;
 
+
+//
+// Error and status code definitions
+//
 constexpr uint64_t error_bit = 0x8000000000000000ull; 
 constexpr uint64_t make_error(uint64_t e) { return e|error_bit; }
 
@@ -31,6 +34,29 @@ enum class status : uint64_t
 inline bool is_error(status s) { return static_cast<uint64_t>(s) & error_bit; }
 inline bool is_warning(status s) { return !is_error(s) && s != status::success; }
 
+
+//
+// Time defitions
+//
+struct time
+{
+	uint16_t year;
+	uint8_t month;
+	uint8_t day;
+	uint8_t hour;
+	uint8_t minute;
+	uint8_t second;
+	uint8_t _pad0;
+	uint32_t nanosecond;
+	int16_t time_zone;
+	uint8_t daylight;
+	uint8_t _pad1;
+};
+
+
+//
+// Memory and allocation defitions
+//
 enum class memory_type : uint32_t
 {
 	reserved_memory_type,
@@ -58,6 +84,12 @@ enum class allocate_type : uint32_t
 	address
 };
 
+
+//
+// Event handling defitions
+//
+using event = void *;
+
 enum class evt : uint32_t
 {
 	notify_wait                   = 0x00000100,
@@ -79,6 +111,37 @@ enum class tpl : uint64_t
 };
 
 using event_notify = void (*)(event, void*);
+
+
+//
+// File IO defitions
+//
+struct file_io_token
+{
+	event event;
+	status status;
+	uint64_t buffer_size;
+	void *buffer;
+};
+
+enum class file_mode : uint64_t
+{
+	read   = 0x0000000000000001ull,
+	write  = 0x0000000000000002ull,
+
+	create = 0x8000000000000000ull
+};
+
+enum class file_attr : uint64_t
+{
+	none      = 0,
+	read_only = 0x0000000000000001ull,
+	hidden    = 0x0000000000000002ull,
+	system    = 0x0000000000000004ull,
+	reserved  = 0x0000000000000008ull,
+	directory = 0x0000000000000010ull,
+	archive   = 0x0000000000000020ull
+};
 
 } // namespace uefi
 

@@ -114,3 +114,115 @@
   post_data:
     - name: mode
       type: uefi::graphics_output_mode *
+
+- name: simple_file_system
+  guid: "0x0964e5b22,0x6459,0x11d2,{0x8e,0x39,0x00,0xa0,0xc9,0x69,0x72,0x3b}"
+  headers:
+    - uefi/protos/file.h
+  pre_data:
+    - name: revision
+      type: uint64_t
+  methods:
+    - name: open_volume
+      args:
+        - name: root
+          type: uefi::protos::file **
+
+- name: file
+  pre_data:
+    - name: revision
+      type: uint64_t
+  methods:
+    - name: open
+      args:
+        - name: new_handle
+          type: file **
+        - name: file_name
+          type: const wchar_t *
+        - name: open_mode
+          type: file_mode
+        - name: attributes
+          type: file_attr
+    - name: close
+    - name: delete_file
+    - name: read
+      args:
+        - name: buffer_size
+          type: uint64_t *
+        - name: buffer
+          type: void *
+    - name: write
+      args:
+        - name: buffer_size
+          type: uint64_t *
+        - name: buffer
+          type: void *
+    - name: get_position
+      args:
+        - name: position
+          type: uint64_t *
+    - name: set_position
+      args:
+        - name: position
+          type: uint64_t
+    - name: get_info
+      args:
+        - name: info_type
+          type: const guid *
+        - name: buffer_size
+          type: uint64_t *
+        - name: buffer
+          type: void *
+    - name: set_info
+      args:
+        - name: info_type
+          type: const guid *
+        - name: buffer_size
+          type: uint64_t
+        - name: buffer
+          type: void *
+    - name: flush
+    - name: open_ex
+      args:
+        - name: new_handle
+          type: file **
+        - name: file_name
+          type: const wchar_t *
+        - name: open_mode
+          type: uint64_t
+        - name: attributes
+          type: uint64_t
+        - name: token
+          type: file_io_token *
+    - name: read_ex
+      args:
+        - name: token
+          type: file_io_token *
+    - name: write_ex
+      args:
+        - name: token
+          type: file_io_token *
+    - name: flush_ex
+      args:
+        - name: token
+          type: file_io_token *
+
+- name: file_info
+  guid: "0x09576e92,0x6d3f,0x11d2,{0x8e,0x39,0x00,0xa0,0xc9,0x69,0x72,0x3b}"
+  pre_data:
+    - name: size
+      type: uint64_t
+    - name: file_size
+      type: uint64_t
+    - name: physical_size
+      type: uint64_t
+    - name: create_time
+      type: time
+    - name: last_access_time
+      type: time
+    - name: modification_time
+      type: time
+    - name: attribute
+      type: uint64_t
+    - name: file_name[]
+      type: wchar_t

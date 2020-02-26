@@ -13,9 +13,9 @@
 
 namespace uefi {
 namespace bs_impl {
-	using allocate_pages = status (*)(allocate_type, memory_type, uint64_t, uintptr_t*);
+	using allocate_pages = status (*)(allocate_type, memory_type, uint64_t, void**);
 	using allocate_pool = status (*)(memory_type, uint64_t, void**);
-	using handle_protocol = status (*)(handle, guid *, void **);
+	using handle_protocol = status (*)(handle, const guid *, void **);
 	using create_event = status (*)(evt, tpl, event_notify, void*, event*);
 	using locate_protocol = status (*)(const guid *, void *, void **);
 	using set_mem = void (*)(void *, uint64_t, uint8_t);
