@@ -13,12 +13,14 @@
 
 namespace uefi {
 namespace bs_impl {
-	using allocate_pages = status (*)(allocate_type, memory_type, uint64_t, void**);
+	using allocate_pages = status (*)(allocate_type, memory_type, size_t, void**);
+	using get_memory_map = status (*)(size_t*, memory_descriptor*, size_t*, size_t*, uint32_t*);
 	using allocate_pool = status (*)(memory_type, uint64_t, void**);
-	using handle_protocol = status (*)(handle, const guid *, void **);
+	using handle_protocol = status (*)(handle, const guid*, void**);
 	using create_event = status (*)(evt, tpl, event_notify, void*, event*);
-	using locate_protocol = status (*)(const guid *, void *, void **);
-	using set_mem = void (*)(void *, uint64_t, uint8_t);
+	using locate_protocol = status (*)(const guid*, void*, void**);
+	using copy_mem = void (*)(void*, void*, size_t);
+	using set_mem = void (*)(void*, uint64_t, uint8_t);
 }
 
 struct boot_services {
@@ -33,7 +35,7 @@ struct boot_services {
 	// Memory Services
 	bs_impl::allocate_pages allocate_pages;
 	void *free_pages;
-	void *get_memory_map;
+	bs_impl::get_memory_map get_memory_map;
 	bs_impl::allocate_pool allocate_pool;
 	void *free_pool;
 
@@ -88,7 +90,7 @@ struct boot_services {
 	void *calculate_crc32;
 
 	// Miscellaneous Services
-	void *copy_mem;
+	bs_impl::copy_mem copy_mem;
 	bs_impl::set_mem set_mem;
 	void *create_event_ex;
 };

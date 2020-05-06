@@ -84,6 +84,15 @@ enum class allocate_type : uint32_t
 	address
 };
 
+struct memory_descriptor
+{
+	memory_type type;
+	uintptr_t physical_start;
+	uintptr_t virtual_start;
+	uint64_t number_of_pages;
+	uint64_t attribute;
+};
+
 
 //
 // Event handling defitions
