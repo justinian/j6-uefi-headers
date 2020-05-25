@@ -13,6 +13,7 @@
 namespace uefi {
 namespace rs_impl {
 	using convert_pointer = uefi::status (*)(uint64_t, void **);
+	using set_virtual_address_map = uefi::status (*)(size_t, size_t, uint32_t, memory_descriptor *);
 }
 
 struct runtime_services {
@@ -27,7 +28,7 @@ struct runtime_services {
 	void *set_wakeup_time;
 
 	// Virtual Memory Services
-	void *set_virtual_address_map;
+	rs_impl::set_virtual_address_map set_virtual_address_map;
 	rs_impl::convert_pointer convert_pointer;
 
 	// Variable Services

@@ -59,7 +59,7 @@ struct time
 //
 enum class memory_type : uint32_t
 {
-	reserved_memory_type,
+	reserved,
 	loader_code,
 	loader_data,
 	boot_services_code,
