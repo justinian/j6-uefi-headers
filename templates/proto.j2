@@ -1,14 +1,4 @@
-#!/usr/bin/env python3
-
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this file,
-# You can obtain one at http://mozilla.org/MPL/2.0/.
-
-import os
-import os.path
-from jinja2 import Template
-
-template = Template('''#pragma once
+#pragma once
 #ifndef _uefi_protos_{{ name }}_h_
 #define _uefi_protos_{{ name }}_h_
 
@@ -62,14 +52,3 @@ public:
 } // namespace uefi
 
 #endif // _uefi_protos_{{ name }}_h_
-
-''')
-
-protos_dir = os.path.join("include", "uefi", "protos")
-os.makedirs(protos_dir, exist_ok=True)
-
-import yaml
-protos = yaml.load(open("protos.yaml"))
-for proto in protos:
-    with open(os.path.join(protos_dir, proto["name"] + ".h"), 'w') as header:
-        header.write(template.render(proto))
