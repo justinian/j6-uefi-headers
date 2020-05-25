@@ -1,2 +1,2 @@
-include/uefi/protos/*
+uefi/protos/*
 tags

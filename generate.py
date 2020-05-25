@@ -11,7 +11,7 @@ from jinja2 import Environment, FileSystemLoader, Template
 template_path = join(dirname(__file__), "templates")
 env = Environment(loader=FileSystemLoader(template_path))
 
-protos_dir = join("include", "uefi", "protos")
+protos_dir = join("uefi", "protos")
 os.makedirs(protos_dir, exist_ok=True)
 
 proto_template = env.get_template("proto.j2")
