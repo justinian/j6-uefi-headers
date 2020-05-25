@@ -18,6 +18,7 @@ namespace bs_impl {
 	using allocate_pool = status (*)(memory_type, uint64_t, void**);
 	using handle_protocol = status (*)(handle, const guid*, void**);
 	using create_event = status (*)(evt, tpl, event_notify, void*, event*);
+	using exit_boot_services = status (*)(handle, size_t);
 	using locate_protocol = status (*)(const guid*, void*, void**);
 	using copy_mem = void (*)(void*, void*, size_t);
 	using set_mem = void (*)(void*, uint64_t, uint8_t);
@@ -63,7 +64,7 @@ struct boot_services {
 	void *start_image;
 	void *exit;
 	void *unload_image;
-	void *exit_boot_services;
+	bs_impl::exit_boot_services exit_boot_services;
 
 	// Miscellaneous Services
 	void *get_next_monotonic_count;
