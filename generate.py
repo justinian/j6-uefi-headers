@@ -17,7 +17,7 @@ os.makedirs(protos_dir, exist_ok=True)
 proto_template = env.get_template("proto.j2")
 
 import yaml
-protos = yaml.load(open("protos.yaml"))
+protos = yaml.safe_load(open("protos.yaml"))
 for proto in protos:
     with open(os.path.join(protos_dir, proto["name"] + ".h"), 'w') as header:
-        header.write(template.render(proto_template))
+        header.write(proto_template.render(proto))
