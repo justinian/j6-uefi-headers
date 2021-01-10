@@ -17,7 +17,13 @@ struct {{ name }};
 
 struct {{ name }}
 {
-    {% if guid %}static constexpr uefi::guid guid{ {{ guid }} };{% endif %}
+{%- if guid %}
+    static constexpr uefi::guid guid{ {{ guid }} };
+{%- endif -%}
+{%- for binding in bindings %}
+    static constexpr uefi::guid {{ binding.name }}{ {{ binding.guid }} };
+{%- endfor %}
+
 {% for method in methods %}
     inline uefi::status {{ method.name }}(
       {%- for arg in method.args -%}
