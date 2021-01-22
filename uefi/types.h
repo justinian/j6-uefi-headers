@@ -152,60 +152,6 @@ enum class file_attr : uint64_t
 	archive   = 0x0000000000000020ull
 };
 
-//
-// IP definitions
-//
-struct ipv4_address
-{
-	uint8_t addr[4];
-};
-
-struct ipv6_address
-{
-	uint8_t addr[16];
-};
-
-union ip_address
-{
-	uint8_t addr[4];
-	ipv4_address v4;
-	ipv6_address v6;
-};
-
-//
-// HTTP definitions
-//
-struct httpv4_access_point
-{
-	bool use_default_address;
-	ipv4_address local_address;
-	ipv4_address local_subnet;
-	uint16_t local_port;
-};
-
-struct httpv6_access_point
-{
-	ipv6_address local_address;
-	uint16_t local_port;
-};
-
-enum class http_version : int {
-	v10,
-	v11,
-	unsupported,
-};
-
-struct http_config_data
-{
-	http_version http_version;
-	uint32_t time_out_millisec;
-	bool local_address_is_ipv6;
-	union {
-		httpv4_access_point *ipv4_node;
-		httpv6_access_point *ipv6_node;
-	} access_point;
-};
-
 } // namespace uefi
 
 #endif

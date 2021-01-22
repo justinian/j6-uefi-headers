@@ -238,8 +238,106 @@
         - name: child_handle
           type: uefi::handle
 
+- name: ip6
+  guid: "0x2c8759d5,0x5c2d,0x66ef,{0x92,0x5f,0xb6,0x6c,0x10,0x19,0x57,0xe2}"
+  headers:
+    - uefi/networking.h
+  bindings:
+    - name: service_binding
+      guid: "0xec835dd3,0xfe0f,0x617b,{0xa6,0x21,0xb3,0x50,0xc3,0xe1,0x33,0x88}"
+  methods:
+    - name: get_mode_data
+      args:
+        - name: ip6_mode_data
+          type: uefi::ip6_mode_data *
+        - name: mnp_config_data
+          type: uefi::managed_network_config_data *
+        - name: snp_config_data
+          type: uefi::simple_network_mode *
+    - name: configure
+      args:
+        - name: ip6_config_data
+          type: uefi::ip6_config_data *
+    - name: groups
+      args:
+        - name: join_flag
+          type: bool
+        - name: group_address
+          type: uefi::ipv6_address *
+    - name: routes
+      args:
+        - name: delete_route
+          type: bool
+        - name: destination
+          type: uefi::ipv6_address *
+        - name: prefix_length
+          type: uint8_t
+        - name: gateway_address
+          type: uefi::ipv6_address *
+    - name: neighbors
+      args:
+        - name: delete_flag
+          type: bool
+        - name: target_ip6_address
+          type: uefi::ipv6_address *
+        - name: target_link_address
+          type: uefi::mac_address *
+        - name: timeout
+          type: uint32_t
+        - name: override
+          type: bool
+    - name: transmit
+      args:
+        - name: token
+          type: uefi::ip6_completion_token *
+    - name: receive
+      args:
+        - name: token
+          type: uefi::ip6_completion_token *
+    - name: cancel
+      args:
+        - name: token
+          type: uefi::ip6_completion_token *
+    - name: poll
+
+- name: ip6_config
+  guid: "0x937fe521,0x95ae,0x4d1a,{0x89,0x29,0x48,0xbc,0xd9,0x0a,0xd3,0x1a}"
+  headers:
+    - uefi/networking.h
+  methods:
+    - name: set_data
+      args:
+        - name: data_type
+          type: uefi::ip6_config_data_type
+        - name: data_size
+          type: size_t
+        - name: data
+          type: void *
+    - name: get_data
+      args:
+        - name: data_type
+          type: uefi::ip6_config_data_type
+        - name: data_size
+          type: size_t
+        - name: data
+          type: void *
+    - name: register_data_notify
+      args:
+        - name: data_type
+          type: uefi::ip6_config_data_type
+        - name: event
+          type: uefi::event
+    - name: unregister_data_notify
+      args:
+        - name: data_type
+          type: uefi::ip6_config_data_type
+        - name: event
+          type: uefi::event
+
 - name: http
   guid: "0x7a59b29b,0x910b,0x4171,{0x82,0x42,0xa8,0x5a,0x0d,0xf2,0x5b,0x5b}"
+  headers:
+    - uefi/networking.h
   bindings:
     - name: service_binding
       guid: "0xbdc8e6af,0xd9bc,0x4379,{0xa7,0x2a,0xe0,0xc4,0xe7,0x5d,0xae,0x1c}"
@@ -249,7 +347,19 @@
         - name: http_config_data
           type: uefi::http_config_data *
     - name: configure
+      args:
+        - name: http_config_data
+          type: uefi::http_config_data *
     - name: request
+      args:
+        - name: token
+          type: uefi::http_token *
     - name: cancel
+      args:
+        - name: token
+          type: uefi::http_token *
     - name: response
+      args:
+        - name: token
+          type: uefi::http_token *
     - name: poll
